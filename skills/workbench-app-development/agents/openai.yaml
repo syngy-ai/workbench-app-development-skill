@@ -1,0 +1,4 @@
+interface:
+  display_name: "Workbench App Development"
+  short_description: "Build and deploy Syngy Workbench applications"
+  default_prompt: "Use $workbench-app-development to create and deploy an authenticated Workbench application."
