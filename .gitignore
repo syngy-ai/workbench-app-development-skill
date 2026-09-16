@@ -2,3 +2,5 @@
 *.log
 tmp/
 docs/superpowers/
+__pycache__/
+*.pyc
