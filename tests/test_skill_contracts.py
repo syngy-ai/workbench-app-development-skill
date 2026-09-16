@@ -6,6 +6,7 @@ PROJECT_DIR = Path(__file__).resolve().parents[1]
 SKILL_DIR = PROJECT_DIR / "skills" / "workbench-app-development"
 SKILL_FILE = SKILL_DIR / "SKILL.md"
 GOTCHAS_FILE = SKILL_DIR / "references" / "arcubase-runtime-gotchas.md"
+LOCAL_VALIDATION_FILE = SKILL_DIR / "references" / "local-validation.md"
 ACCEPTANCE_FILE = SKILL_DIR / "references" / "acceptance-scenarios.md"
 
 
@@ -47,6 +48,50 @@ class SkillContractTests(unittest.TestCase):
 
         self.assertIn("Datetime writes and undocumented serial formats", acceptance)
         self.assertIn("never silently changes identifier semantics", acceptance)
+
+    def test_skill_requires_local_real_environment_acceptance_before_build(self):
+        skill = SKILL_FILE.read_text(encoding="utf-8")
+
+        self.assertIn(
+            "[local validation contract](references/local-validation.md)",
+            skill,
+        )
+        local_validation = skill.index("local validation contract")
+        production_build = skill.index("production build")
+        remote_project = skill.index("remote Workbench project")
+        self.assertLess(local_validation, production_build)
+        self.assertLess(local_validation, remote_project)
+
+    def test_local_validation_contract_has_real_data_and_human_gate(self):
+        self.assertTrue(
+            LOCAL_VALIDATION_FILE.is_file(),
+            "local validation needs a focused contract reference",
+        )
+        contract = LOCAL_VALIDATION_FILE.read_text(encoding="utf-8")
+
+        self.assertIn("WORKBENCH_REQUIRED_TEAM_ID=<teamId>", contract)
+        self.assertIn("npm run dev", contract)
+        self.assertIn("real backend rows", contract)
+        self.assertIn("explicitly approves publishing", contract)
+        self.assertIn("does not waive this checkpoint", contract)
+        self.assertIn("explicitly waives interactive local acceptance", contract)
+
+    def test_local_arcubase_codegen_uses_current_supported_flags(self):
+        contract = LOCAL_VALIDATION_FILE.read_text(encoding="utf-8")
+
+        self.assertIn("--app-id <appId>", contract)
+        self.assertIn("--team-id <teamId>", contract)
+        self.assertIn("Do not pass `--web-url`", contract)
+
+    def test_acceptance_scenario_covers_local_gate_and_write_safety(self):
+        acceptance = ACCEPTANCE_FILE.read_text(encoding="utf-8")
+
+        self.assertIn("Local real-data acceptance before publish", acceptance)
+        self.assertIn(
+            "stops before the production build and remote project creation",
+            acceptance,
+        )
+        self.assertIn("does not mutate real records without authorization", acceptance)
 
 
 if __name__ == "__main__":

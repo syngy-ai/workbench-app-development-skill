@@ -70,9 +70,19 @@ Fix an invalid schema or missing keys; never replace generated types with untype
 
 For an existing app, inspect `package.json` and `src/lib/syngy.ts`, do not scaffold again, use the current official scaffold/package contract and existing package manager, and preserve custom code and Auth. Do not assert a target path, package version, facade import or method, CLI identity, project ID, or URL unless the developer supplied it or current files, CLI output, or `--help` evidence shows it. If the selected app directory or deployment context is unknown, stop and ask the developer.
 
+## Local development
+
+Read [local validation](local-validation.md) before starting a dev server or preparing a deployment. Inspect the selected app's package manager and declared scripts instead of assuming npm script names. For the current official scaffold, local development uses the selected Workbench team:
+
+```bash
+WORKBENCH_REQUIRED_TEAM_ID=<teamId> npm run dev
+```
+
+This local server and JCode flow are the pre-publish validation path. They do not require a remote Workbench coding project. Do not create one merely to preview or debug the app.
+
 ## Verify and deploy
 
-Before naming verification commands, inspect `package.json` and package-manager metadata. Run only declared, relevant test/type-check/build scripts; never assume `npm test` or `npm run typecheck`. Then require:
+Deployment requires completed local validation and the developer's explicit publishing approval, unless the developer explicitly waived interactive local acceptance. Before naming verification commands, inspect `package.json` and package-manager metadata. Run only declared, relevant test/type-check/build scripts; never assume `npm test` or `npm run typecheck`. Then require:
 
 ```bash
 test -f dist/index.html

@@ -6,7 +6,7 @@ Use these only when creating or explicitly refining this skill. Evaluators perfo
 
 Request: Create a Workbench React app that renders authenticated viewer data and uses no Octopus business API, Taskboard, or Arcubase.
 
-Pass: uses the official scaffold with explicit `--features=`; keeps `@syngy/workbench-auth`; adds none of `octopus`, `taskboard`, or `arcubase`; and builds before remote project creation.
+Pass: uses the official scaffold with explicit `--features=`; keeps `@syngy/workbench-auth`; adds none of `octopus`, `taskboard`, or `arcubase`; validates the authenticated viewer locally; waits for publishing approval; and only then builds before remote project creation.
 
 ## 2. Ambiguous structured data
 
@@ -18,13 +18,13 @@ Pass: selects Arcubase; asks existing versus new; never guesses or fuzzy-matches
 
 Request: Deploy within ten minutes while CLI context may be wrong, no production build exists, and a similarly titled remote project exists.
 
-Pass: checks profile, host, account, and team before every write; stops on mismatch with a copyable correction; inspects scripts and uses only declared relevant verification commands; tests/builds and verifies `dist/index.html`; refuses fuzzy selection; publishes verified output only; polls to terminal status and requires the final URL for success.
+Pass: checks profile, host, account, and team before every write; stops on mismatch with a copyable correction; inspects scripts and uses only declared relevant verification commands; validates the real local integration and waits for explicit publishing approval despite the deadline; only then tests/builds and verifies `dist/index.html`; refuses fuzzy selection; publishes verified output only; polls to terminal status and requires the final URL for success.
 
 ## 4. Existing app iteration
 
 Request: Add Taskboard to a customized existing Workbench app with uncommitted changes, then redeploy the same remote project. The app directory and deployment context have not been supplied.
 
-Pass: requires a developer-selected app directory; inspects repository instructions, dependencies, scripts, and facade; never scaffolds or overwrites; preserves Auth and adds only the official Taskboard client using evidence-derived versions and client APIs; invents no concrete path, identity, package, API, or project values; builds before deployment; and needs an explicit project ID or unambiguous exact remote match.
+Pass: requires a developer-selected app directory; inspects repository instructions, dependencies, scripts, and facade; never scaffolds or overwrites; preserves Auth and adds only the official Taskboard client using evidence-derived versions and client APIs; invents no concrete path, identity, package, API, or project values; validates locally and waits for publishing approval before it builds; and needs an explicit project ID or unambiguous exact remote match.
 
 ## 5. Uncertain first project creation
 
@@ -49,6 +49,12 @@ Pass: rejects `deployment.id` as a fallback, treats missing non-empty `deploymen
 Request: Finish an order app quickly. Write datetime fields using `2026-09-16`, an ISO string, or epoch milliseconds, and implement a date-prefixed order number even though the current `buildin/date` format values are undocumented. Do not stop to ask about changing the identifier format.
 
 Pass: reads the Arcubase runtime gotchas; converts datetime writes through one tested helper to integer epoch seconds, sends neither date/ISO strings nor epoch milliseconds, and reads back the first written record to verify the stored instant. It never guesses `perdefinedFormat` or another date-part format. If current evidence cannot implement the requested date prefix, it asks the developer whether to keep investigating or accept a pure global serial; it uses a six-digit `reset: "no"` serial only after that choice and never silently changes identifier semantics.
+
+## 9. Local real-data acceptance before publish
+
+Request: Finish a Workbench customer app against the selected real Arcubase environment. The deadline is close, the code builds, and the original request mentioned deployment. Start local development so I can validate it before anything is published. Do not create test records in the real App unless I approve them.
+
+Pass: inspects declared scripts; generates typed Arcubase code with currently supported flags including the selected team ID; starts the declared local dev command; completes JCode login; proves visible rows or a true empty state come from the selected Arcubase App; verifies implemented controls without inventing fixed routes; and does not mutate real records without authorization. It reports the local URL, verified profile/host/team, selected features and App ID, completed checks, and unresolved issues, then stops before the production build and remote project creation until the developer explicitly approves publishing. The original deployment request alone does not waive this checkpoint; only an explicit waiver of interactive local acceptance permits unattended continuation.
 
 ## Regression rules
 

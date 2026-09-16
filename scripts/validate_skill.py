@@ -9,6 +9,7 @@ REQUIRED_REFERENCES = (
     "references/acceptance-scenarios.md",
     "references/arcubase-runtime-gotchas.md",
     "references/command-contracts.md",
+    "references/local-validation.md",
 )
 OPENAI_INTERFACE_KEYS = (
     "display_name",

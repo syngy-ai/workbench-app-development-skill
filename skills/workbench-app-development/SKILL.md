@@ -35,11 +35,13 @@ Before writing datetime row values or defining `serialnumber` fields, read [Arcu
 Read [command contracts](references/command-contracts.md) before scaffolding, Arcubase work, or deployment.
 
 1. Scaffold a safe empty target or inspect the existing app.
-2. Use the generated authenticated facade; do not add a token store or standalone login.
-3. Run relevant tests and production build; require `dist/index.html`.
-4. Before team-scoped discovery (including Arcubase App list) and every external write, run `octopus-cli auth whoami --json`; verify profile, host, account, and team. On mismatch, stop with a copyable correction.
-5. Create at most one first remote Workbench project, and only after the build. If its response is uncertain, use `coding projects list/show` to resolve it before any retry. Never introduce or write a hidden local project-ID mapping file. Later deployments use an explicit project ID or an unambiguous exact list result.
-6. Publish the built directory and boundedly watch its task: `queued`/`processing` continue; `failed` stops immediately with `errorMessage` and action; `active` plus `workbenchUrl` succeeds. Successful handoff reports exactly `projectId`, `taskId`, `status=active`, `workbenchUrl`, verified `profile`, `host`, `team`; never substitute Arcubase `appId` or deployment/version/environment fields.
+2. Before team-scoped discovery (including Arcubase App list) and every external write, run `octopus-cli auth whoami --json`; verify profile, host, account, and team. On mismatch, stop with a copyable correction.
+3. Use the generated authenticated facade; do not add a token store or standalone login. Generate typed clients for selected backend features and implement only working visible controls.
+4. Follow the [local validation contract](references/local-validation.md) before any production build or remote project creation: start the declared dev server, connect through the supported local Workbench login, and prove the selected real backend supplies the rendered business state.
+5. Report the local URL, verified context, selected feature/App IDs, evidence, and unresolved issues. Stop until the developer explicitly approves publishing. An earlier request to deploy does not waive this checkpoint; skip it only when the developer explicitly waives interactive local acceptance.
+6. After approval, run only declared relevant tests and the production build; require `dist/index.html`.
+7. Create at most one first remote Workbench project, and only after the accepted build. If its response is uncertain, use `coding projects list/show` to resolve it before any retry. Never introduce or write a hidden local project-ID mapping file. Later deployments use an explicit project ID or an unambiguous exact list result.
+8. Publish the built directory and boundedly watch its task: `queued`/`processing` continue; `failed` stops immediately with `errorMessage` and action; `active` plus `workbenchUrl` succeeds. Successful handoff reports exactly `projectId`, `taskId`, `status=active`, `workbenchUrl`, verified `profile`, `host`, `team`; never substitute Arcubase `appId` or deployment/version/environment fields.
 
 Direct HTTP, `kubectl`, GitHub Actions, copied scaffold, alternate publish, and remote archive/delete are outside this skill.
 
