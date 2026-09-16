@@ -16,6 +16,8 @@ npm create @syngy/workbench-app-react@latest <target> -- --features=octopus,arcu
 
 Never omit `--features`: the scaffold otherwise defaults to `octopus`. Auth is always supplied as `@syngy/workbench-auth`.
 
+`--features=octopus` installs the current scaffold-compatible `@syngy/octopus-client` and exposes it through the generated facade. Read [Octopus client](octopus-client.md) for its selection, usage, and data-boundary contract. For an existing app, inspect its dependency versions and facade first; add this official client with the existing package manager only when the requirement needs Host APIs beyond the authenticated viewer.
+
 ## CLI context
 
 Before team-scoped discovery (including Arcubase App list) and every external write, run:

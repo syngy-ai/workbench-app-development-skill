@@ -14,11 +14,12 @@ Inspect repository instructions and target first. Never scaffold a non-empty app
 | Requirement | Feature |
 | --- | --- |
 | Authenticated Workbench UI only | empty |
-| Octopus conversations or digital employees | `octopus` |
+| Host users, teams, members, organization, digital employees, conversations, files, knowledge, skills, integrations, or runtime resources | `octopus` |
 | Tasks or projects | `taskboard` |
 | Persisted, shared, queryable records | `arcubase` |
 
 Local TypeScript objects and static fixtures do not imply Arcubase.
+When `octopus` is selected, read the [Octopus client contract](references/octopus-client.md) before installing or calling Host APIs. Displaying only the authenticated viewer does not require it.
 
 ## Arcubase decision
 
@@ -29,6 +30,7 @@ When Arcubase is required, stop before writes: the developer explicitly chooses 
 
 Never guess an ID, match by name alone, or silently create storage.
 Before writing datetime row values or defining `serialnumber` fields, read [Arcubase runtime gotchas](references/arcubase-runtime-gotchas.md).
+Even when `octopus.api` exposes Arcubase proxy methods, persisted business data uses the `arcubase` feature and its generated typed ingress clients.
 
 ## Workflow
 

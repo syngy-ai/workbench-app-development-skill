@@ -7,6 +7,7 @@ SKILL_DIR = PROJECT_DIR / "skills" / "workbench-app-development"
 SKILL_FILE = SKILL_DIR / "SKILL.md"
 GOTCHAS_FILE = SKILL_DIR / "references" / "arcubase-runtime-gotchas.md"
 LOCAL_VALIDATION_FILE = SKILL_DIR / "references" / "local-validation.md"
+OCTOPUS_CLIENT_FILE = SKILL_DIR / "references" / "octopus-client.md"
 ACCEPTANCE_FILE = SKILL_DIR / "references" / "acceptance-scenarios.md"
 
 
@@ -92,6 +93,37 @@ class SkillContractTests(unittest.TestCase):
             acceptance,
         )
         self.assertIn("does not mutate real records without authorization", acceptance)
+
+    def test_skill_routes_host_user_api_requirements_to_octopus(self):
+        skill = SKILL_FILE.read_text(encoding="utf-8")
+
+        self.assertIn(
+            "[Octopus client contract](references/octopus-client.md)",
+            skill,
+        )
+        self.assertIn("users, teams, members, organization", skill)
+
+    def test_octopus_contract_selects_package_facade_and_data_boundary(self):
+        self.assertTrue(
+            OCTOPUS_CLIENT_FILE.is_file(),
+            "Host user API work needs a focused Octopus client reference",
+        )
+        contract = OCTOPUS_CLIENT_FILE.read_text(encoding="utf-8")
+
+        self.assertIn("--features=octopus", contract)
+        self.assertIn("@syngy/octopus-client", contract)
+        self.assertIn("createSyngyClients().octopus.api", contract)
+        self.assertIn("v1TeamsOrganizationMembersSearchCreate", contract)
+        self.assertIn("current installed type declarations", contract)
+        self.assertIn("must use the `arcubase` feature", contract)
+        self.assertIn("never its generic Arcubase proxy methods", contract)
+
+    def test_acceptance_scenario_covers_octopus_host_api_selection(self):
+        acceptance = ACCEPTANCE_FILE.read_text(encoding="utf-8")
+
+        self.assertIn("Host directory plus persisted business data", acceptance)
+        self.assertIn("selects both `octopus` and `arcubase`", acceptance)
+        self.assertIn("refuses the generic Arcubase proxy shortcut", acceptance)
 
 
 if __name__ == "__main__":

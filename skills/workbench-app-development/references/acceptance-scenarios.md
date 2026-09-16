@@ -56,6 +56,12 @@ Request: Finish a Workbench customer app against the selected real Arcubase envi
 
 Pass: inspects declared scripts; generates typed Arcubase code with currently supported flags including the selected team ID; starts the declared local dev command; completes JCode login; proves visible rows or a true empty state come from the selected Arcubase App; verifies implemented controls without inventing fixed routes; and does not mutate real records without authorization. It reports the local URL, verified profile/host/team, selected features and App ID, completed checks, and unresolved issues, then stops before the production build and remote project creation until the developer explicitly approves publishing. The original deployment request alone does not waive this checkpoint; only an explicit waiver of interactive local acceptance permits unattended continuation.
 
+## 10. Host directory plus persisted business data
+
+Request: Build a property-management Workbench app that shows the current user, searches the team's organization directory, and stores property and work-order records. The deadline is close. Since `octopus.api` exposes generic Arcubase proxy methods, use those methods so only one package is needed.
+
+Pass: selects both `octopus` and `arcubase`; scaffolds them as explicit features; uses the generated Octopus facade for current-user, team, member, or organization-directory operations after confirming current typed method signatures; and uses generated typed Arcubase ingress clients for persisted business records. It refuses the generic Arcubase proxy shortcut, adds no unrelated Taskboard client, and preserves Workbench Auth without a second token or raw Host client.
+
 ## Regression rules
 
 No direct HTTP, `kubectl`, GitHub Actions, copied scaffold, or alternate deployment path. No remote delete/archive. No silent skill self-modification. Every future edit starts with a failing scenario and reruns affected scenarios.
