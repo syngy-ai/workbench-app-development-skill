@@ -7,6 +7,7 @@ from pathlib import Path
 NAME_PATTERN = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*\Z")
 REQUIRED_REFERENCES = (
     "references/acceptance-scenarios.md",
+    "references/arcubase-runtime-gotchas.md",
     "references/command-contracts.md",
 )
 OPENAI_INTERFACE_KEYS = (

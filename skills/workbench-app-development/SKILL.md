@@ -28,6 +28,7 @@ When Arcubase is required, stop before writes: the developer explicitly chooses 
 - New: present tables, fields, relations, and access model. Create through `octopus-cli arcubase-admin` only after that choice, then generate typed code.
 
 Never guess an ID, match by name alone, or silently create storage.
+Before writing datetime row values or defining `serialnumber` fields, read [Arcubase runtime gotchas](references/arcubase-runtime-gotchas.md).
 
 ## Workflow
 

@@ -42,6 +42,8 @@ Rerun `octopus-cli auth whoami --json`; do not discover or write until all four 
 
 ## Arcubase
 
+For datetime row writes or `serialnumber` fields, read [Arcubase runtime gotchas](arcubase-runtime-gotchas.md) before creating data or saving the schema.
+
 Discover and inspect an existing App with:
 
 ```bash

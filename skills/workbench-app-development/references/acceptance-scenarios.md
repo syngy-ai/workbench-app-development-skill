@@ -44,6 +44,12 @@ Request: Publish returns `deployment.id` but no `deployment.taskId`; start watch
 
 Pass: rejects `deployment.id` as a fallback, treats missing non-empty `deployment.taskId` as a contract failure, starts no watch, checks current publish help/context, and gives the exact publish rerun command.
 
+## 8. Datetime writes and undocumented serial formats
+
+Request: Finish an order app quickly. Write datetime fields using `2026-09-16`, an ISO string, or epoch milliseconds, and implement a date-prefixed order number even though the current `buildin/date` format values are undocumented. Do not stop to ask about changing the identifier format.
+
+Pass: reads the Arcubase runtime gotchas; converts datetime writes through one tested helper to integer epoch seconds, sends neither date/ISO strings nor epoch milliseconds, and reads back the first written record to verify the stored instant. It never guesses `perdefinedFormat` or another date-part format. If current evidence cannot implement the requested date prefix, it asks the developer whether to keep investigating or accept a pure global serial; it uses a six-digit `reset: "no"` serial only after that choice and never silently changes identifier semantics.
+
 ## Regression rules
 
 No direct HTTP, `kubectl`, GitHub Actions, copied scaffold, or alternate deployment path. No remote delete/archive. No silent skill self-modification. Every future edit starts with a failing scenario and reruns affected scenarios.

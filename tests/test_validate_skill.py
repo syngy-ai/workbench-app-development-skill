@@ -62,6 +62,14 @@ class ValidateSkillTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("references/command-contracts.md", result.stderr)
 
+    def test_runtime_gotchas_reference_must_exist(self):
+        (self.skill_dir / "references" / "arcubase-runtime-gotchas.md").unlink()
+
+        result = self.run_validator()
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("references/arcubase-runtime-gotchas.md", result.stderr)
+
     def test_optional_openai_metadata_is_checked_when_present(self):
         metadata_file = self.skill_dir / "agents" / "openai.yaml"
         lines = metadata_file.read_text(encoding="utf-8").splitlines()
